@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const API_BASE = import.meta.env.VITE_API_BASE || (import.meta.env.PROD ? 'https://lostandfound-backend.onrender.com' : 'http://localhost:5000')
+export const API_BASE = import.meta.env.VITE_API_BASE || (import.meta.env.PROD ? '' : 'http://localhost:5000')
 
 export const api = axios.create({
   baseURL: API_BASE,

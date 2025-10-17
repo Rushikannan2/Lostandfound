@@ -35,9 +35,22 @@ app.use(cookieParser(process.env.SESSION_SECRET || 'dev_secret'));
 // static serve uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.get('/', (req, res) => {
+// Serve static files from frontend build in production
+if (NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+}
+
+// API routes
+app.get('/api', (req, res) => {
   res.json({ status: 'ok', service: 'KLH Lost & Found API' });
 });
+
+// Serve frontend for all non-API routes in production
+if (NODE_ENV === 'production') {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+  });
+}
 
 app.use('/api/auth', authRoutes);
 app.use('/api/items', itemRoutes);

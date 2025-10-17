@@ -1,11 +1,11 @@
 services:
-  # Backend API Service
+  # Full Stack Application (Backend + Frontend)
   - type: web
-    name: lostandfound-backend
+    name: lostandfound-app
     env: node
     plan: free
-    buildCommand: cd backend && npm install
-    startCommand: cd backend && npm start
+    buildCommand: npm run build
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
@@ -16,13 +16,4 @@ services:
       - key: SESSION_SECRET
         generateValue: true
       - key: CLIENT_ORIGIN
-        value: https://lostandfound-frontend.onrender.com
-
-  # Frontend Static Site
-  - type: static
-    name: lostandfound-frontend
-    buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: ./frontend/dist
-    envVars:
-      - key: VITE_API_BASE
-        value: https://lostandfound-backend.onrender.com
+        value: https://lostandfound-app.onrender.com

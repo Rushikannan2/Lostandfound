@@ -71,10 +71,10 @@ console.log('\n⚙️ Checking render.yaml configuration...');
 
 try {
   const renderConfig = fs.readFileSync(path.join(__dirname, 'render.yaml'), 'utf8');
-  if (renderConfig.includes('type: web') && renderConfig.includes('type: static')) {
-    console.log('✅ render.yaml has web and static services');
+  if (renderConfig.includes('type: web') && renderConfig.includes('buildCommand') && renderConfig.includes('startCommand')) {
+    console.log('✅ render.yaml has web service with build and start commands');
   } else {
-    console.log('❌ render.yaml missing required service types');
+    console.log('❌ render.yaml missing required service configuration');
     allFilesExist = false;
   }
 } catch (error) {
@@ -122,10 +122,10 @@ if (allFilesExist) {
   console.log('\n📋 Next Steps:');
   console.log('1. Push your code to GitHub');
   console.log('2. Connect your repository to Render');
-  console.log('3. Deploy backend service first');
-  console.log('4. Deploy frontend service second');
-  console.log('5. Configure environment variables');
-  console.log('6. Test your deployed application');
+  console.log('3. Deploy as a single web service');
+  console.log('4. Configure environment variables');
+  console.log('5. Test your deployed application');
+  console.log('6. Access at: https://lostandfound-app.onrender.com');
   console.log('\n📖 See DEPLOYMENT.md for detailed instructions');
 } else {
   console.log('❌ DEPLOYMENT NOT READY');

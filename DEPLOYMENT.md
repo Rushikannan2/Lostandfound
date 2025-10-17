@@ -12,20 +12,14 @@ This guide will help you deploy the KLH Lost & Found application on Render.
 
 ### 🔧 Environment Variables
 
-#### Backend Service Environment Variables:
+#### Application Environment Variables:
 
 ```bash
 NODE_ENV=production
 PORT=10000
 MONGO_URI=mongodb+srv://kannanrushi05_db_user:V9HCHCbKVRB14uEq@cluster0.p2iuqpr.mongodb.net/web?retryWrites=true&w=majority&appName=Cluster0
 SESSION_SECRET=your-secret-key-here
-CLIENT_ORIGIN=https://lostandfound-frontend.onrender.com
-```
-
-#### Frontend Service Environment Variables:
-
-```bash
-VITE_API_BASE=https://lostandfound-backend.onrender.com
+CLIENT_ORIGIN=https://lostandfound-app.onrender.com
 ```
 
 ### 🗄️ Database Setup
@@ -42,39 +36,33 @@ VITE_API_BASE=https://lostandfound-backend.onrender.com
 
 ### 📁 Deployment Steps
 
-#### 1. Backend Service
+#### Single Service Deployment
 1. Go to Render Dashboard
 2. Click "New +" → "Web Service"
 3. Connect your GitHub repository
 4. Configure:
-   - **Name**: `lostandfound-backend`
+   - **Name**: `lostandfound-app`
    - **Environment**: `Node`
-   - **Build Command**: `cd backend && npm install`
+   - **Build Command**: 
+     ```bash
+     cd backend && npm install
+     cd ../frontend && npm install && npm run build
+     ```
    - **Start Command**: `cd backend && npm start`
    - **Plan**: Free
 
-#### 2. Frontend Service
-1. Go to Render Dashboard
-2. Click "New +" → "Static Site"
-3. Connect your GitHub repository
-4. Configure:
-   - **Name**: `lostandfound-frontend`
-   - **Build Command**: `cd frontend && npm install && npm run build`
-   - **Publish Directory**: `frontend/dist`
-   - **Plan**: Free
-
-#### 3. Environment Variables Setup
-1. Go to each service's settings
+#### Environment Variables Setup
+1. Go to service settings
 2. Add the environment variables listed above
-3. Make sure to update URLs with your actual Render URLs
+3. The application will serve both API and frontend from the same domain
 
-### 🔗 Service Dependencies
+### 🔗 Single Service Benefits
 
-The frontend service depends on the backend service. Make sure to:
-1. Deploy backend first
-2. Get the backend URL from Render
-3. Update frontend's `VITE_API_BASE` environment variable
-4. Redeploy frontend
+With the single service deployment:
+1. **Simpler Setup**: Only one service to configure
+2. **Same Domain**: No CORS issues between frontend and backend
+3. **Cost Effective**: Only one Render service to pay for
+4. **Easier Management**: Single deployment, single URL
 
 ### 📊 Database Configuration
 
@@ -85,8 +73,8 @@ The application will automatically:
 
 ### 🧪 Testing Deployment
 
-1. **Backend Health Check**: Visit `https://your-backend-url.onrender.com`
-2. **Frontend**: Visit `https://your-frontend-url.onrender.com`
+1. **Application**: Visit `https://lostandfound-app.onrender.com`
+2. **API Health Check**: Visit `https://lostandfound-app.onrender.com/api`
 3. **Signup**: Test user registration
 4. **Login**: Test user authentication
 5. **Post Item**: Test item creation
@@ -157,5 +145,5 @@ cd frontend && npm run build
 ```
 
 Your application will be available at:
-- **Backend**: `https://lostandfound-backend.onrender.com`
-- **Frontend**: `https://lostandfound-frontend.onrender.com`
+- **Full Application**: `https://lostandfound-app.onrender.com`
+- **API Endpoint**: `https://lostandfound-app.onrender.com/api`
