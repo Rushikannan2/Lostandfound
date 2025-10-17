@@ -27,8 +27,13 @@ const upload = multer({ storage });
 
 // GET /api/items
 router.get('/', async (req, res) => {
-  const items = await Item.find().populate('postedBy', 'name email avatarUrl').populate('claimedBy', 'name email');
-  res.json({ items });
+  try {
+    const items = await Item.find().populate('postedBy', 'name email avatarUrl').populate('claimedBy', 'name email');
+    res.json({ items });
+  } catch (error) {
+    console.error('Error fetching items:', error);
+    res.json({ items: [] });
+  }
 });
 
 // POST /api/items  (auth required)
